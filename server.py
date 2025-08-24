@@ -1,9 +1,19 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from prophet import Prophet
 import pandas as pd
 
 app = FastAPI()
+
+# Allow requests from anywhere (or specify your Expo app URL)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # <-- "*" means any origin
+    allow_credentials=True,
+    allow_methods=["*"],  # <-- allow POST, OPTIONS, etc.
+    allow_headers=["*"],  # <-- allow Content-Type
+)
 
 class PriceInput(BaseModel):
     prices:list[float]
